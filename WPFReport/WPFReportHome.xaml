@@ -1,0 +1,85 @@
+﻿<Page x:Class="WPFReport.WPFReportHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPFReport"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WPFReportHome" >
+
+    <Grid>
+        <Grid.Resources>
+            <!--为了方便，将数据嵌入resource section中，此时数据必须包含在x:data中-->
+            <!-- XPath指定暴露那些数据给外界   -->
+            <XmlDataProvider x:Key="ReportDataSource" XPath="Report/Person">
+                <x:XData>
+                    <Report xmlns="">
+                        <Person Name="Mike" Department="Legal">
+                            <Expense ExpenseType="Lunch" ExpenseAmount="50" />
+                            <Expense ExpenseType="Transportation" ExpenseAmount="50" />
+                        </Person>
+                        <Person Name="Lisa" Department="Marketing">
+                            <Expense ExpenseType="Document printing"
+                  ExpenseAmount="50"/>
+                            <Expense ExpenseType="Gift" ExpenseAmount="125" />
+                        </Person>
+                        <Person Name="John" Department="Engineering">
+                            <Expense ExpenseType="Magazine subscription" 
+                 ExpenseAmount="50"/>
+                            <Expense ExpenseType="New machine" ExpenseAmount="600" />
+                            <Expense ExpenseType="Software" ExpenseAmount="500" />
+                        </Person>
+                        <Person Name="Mary" Department="Finance">
+                            <Expense ExpenseType="Dinner" ExpenseAmount="100" />
+                        </Person>
+
+                    </Report>
+                </x:XData>
+            </XmlDataProvider>
+        </Grid.Resources>
+
+        <!--background-->
+        <Grid.Background>
+            <ImageBrush ImageSource="watermark.png"/>
+        </Grid.Background>
+
+        <!---->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="1" 
+               Style="{StaticResource HeaderTextStyle}">
+            View Expense Report
+        </Label>
+
+        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ListHeaderStyle}">
+            <Label FontWeight="ExtraBold" Style="{StaticResource ListHeaderTextStyle}">Names</Label>
+        </Border>
+
+        <ListBox x:Name="personListBox" Grid.Row="2" Grid.Column="1"
+                 ItemsSource="{Binding Source={StaticResource ReportDataSource}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding XPath=@Name}"></Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Click="Button_Click" Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonStyle}">View</Button>
+    </Grid>
+
+
+
+
+
+
+</Page>

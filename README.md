@@ -1,2 +1,2 @@
 # WPFSamples
-This is some wpf code.
+This is some code about wpf.
